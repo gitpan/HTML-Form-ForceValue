@@ -9,11 +9,13 @@ HTML::Form::ForceValue - who cares what values are legal, anyway?
 
 =head1 VERSION
 
-version 0.005
+version 0.006
+
+  $Id: /my/cs/projects/force-form/trunk/lib/HTML/Form/ForceValue.pm 28013 2006-11-14T22:33:04.458076Z rjbs  $
 
 =cut
 
-our $VERSION = '0.005';
+our $VERSION = '0.006';
 
 =head1 SYNOPSIS
 
