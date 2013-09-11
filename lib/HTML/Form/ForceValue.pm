@@ -1,68 +1,11 @@
-package HTML::Form::ForceValue;
-
-use warnings;
 use strict;
+use warnings;
+package HTML::Form::ForceValue;
+{
+  $HTML::Form::ForceValue::VERSION = '0.008';
+}
+# ABSTRACT: who cares what values are legal, anyway?
 
-=head1 NAME
-
-HTML::Form::ForceValue - who cares what values are legal, anyway?
-
-=head1 VERSION
-
-version 0.007
-
-=cut
-
-our $VERSION = '0.007';
-
-=head1 SYNOPSIS
-
-  use Test::WWW::Mechanize tests => 5;
-  use HTML::Form::ForceValue;
-
-  my $mech = WWW::Mechanize->new;
-
-  # We're going to test our form.
-  $mech->get_ok("http://cgi.example.com/form");
-
-  $mech->set_fields(
-    name => 'Crazy Ivan',
-    city => 'Vladivostok',
-  );
-
-  # What if insane bot tries to claim it's from USSR?
-  $mech->form_name("user_info")->find_input("country")->force_value("su");
-
-  $mech->submit;
-
-=head1 DEPRECATION NOTICE
-
-As of C<libwww-perl> 5.817, HTML::Form has a strict mode, which restricts form
-values to the options given.  Without strict mode, values may be set to
-anything you like, making this module unnecessary.  It remains on the CPAN for
-use by those who choose not to upgrade their LWP, but in general this code is
-now obsolete.
-
-=head1 DESCRIPTION
-
-L<HTML::Form|HTML::Form> is a very useful module that provides objects to
-represent HTML forms.  They can be filled in, and the filled-in values can be
-converted into an HTTP::Request for submission to a server.
-
-L<WWW::Mechanize|WWW::Mechanize> makes this even easier by providing a very
-easy to automate user agent that provides HTML::Form objects to represent
-forms.  L<Test::WWW::Mechanize|Test::WWW::Mechanize> hangs some testing
-features on Mech, making it easy to automatically test how web applications
-behave.
-
-One really important thing to test is how a web application responds to invalid
-input.  Unfortunately, HTML::Form protects you from doing this by throwing an
-exception when an invalid datum is assigned to an enumerated field.
-HTML::Form::ForceValue mixes in to HTML::Form classes to provide C<force_value>
-methods which behave like C<value>, but will automatically add any invalid
-datum to the list of valid data.
-
-=cut
 
 sub import {
   my $class = shift;
@@ -71,7 +14,10 @@ sub import {
 }
 
 package HTML::Form::ForceValue::Form;
-use Sub::Exporter -setup => {
+{
+  $HTML::Form::ForceValue::Form::VERSION = '0.008';
+}
+use Sub::Exporter 0.960 -setup => {
   into    => 'HTML::Form',
   exports => [ qw(force_value) ],
   groups  => [ default => [ '-all' ] ],
@@ -98,6 +44,9 @@ sub force_value {
 }
 
 package HTML::Form::ForceValue::Form::Input;
+{
+  $HTML::Form::ForceValue::Form::Input::VERSION = '0.008';
+}
 use Sub::Exporter -setup => {
   into     => 'HTML::Form::Input',
   exports  => [ qw(force_value) ],
@@ -115,6 +64,68 @@ sub force_value {
   return $old;
 }
 
+
+1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+HTML::Form::ForceValue - who cares what values are legal, anyway?
+
+=head1 VERSION
+
+version 0.008
+
+=head1 SYNOPSIS
+
+  use Test::WWW::Mechanize tests => 5;
+  use HTML::Form::ForceValue;
+
+  my $mech = WWW::Mechanize->new;
+
+  # We're going to test our form.
+  $mech->get_ok("http://cgi.example.com/form");
+
+  $mech->set_fields(
+    name => 'Crazy Ivan',
+    city => 'Vladivostok',
+  );
+
+  # What if insane bot tries to claim it's from USSR?
+  $mech->form_name("user_info")->find_input("country")->force_value("su");
+
+  $mech->submit;
+
+=head1 DESCRIPTION
+
+L<HTML::Form|HTML::Form> is a very useful module that provides objects to
+represent HTML forms.  They can be filled in, and the filled-in values can be
+converted into an HTTP::Request for submission to a server.
+
+L<WWW::Mechanize|WWW::Mechanize> makes this even easier by providing a very
+easy to automate user agent that provides HTML::Form objects to represent
+forms.  L<Test::WWW::Mechanize|Test::WWW::Mechanize> hangs some testing
+features on Mech, making it easy to automatically test how web applications
+behave.
+
+One really important thing to test is how a web application responds to invalid
+input.  Unfortunately, HTML::Form protects you from doing this by throwing an
+exception when an invalid datum is assigned to an enumerated field.
+HTML::Form::ForceValue mixes in to HTML::Form classes to provide C<force_value>
+methods which behave like C<value>, but will automatically add any invalid
+datum to the list of valid data.
+
+=head1 DEPRECATION NOTICE
+
+As of C<libwww-perl> 5.817, HTML::Form has a strict mode, which restricts form
+values to the options given.  Without strict mode, values may be set to
+anything you like, making this module unnecessary.  It remains on the CPAN for
+use by those who choose not to upgrade their LWP, but in general this code is
+now obsolete.
+
 =head1 WARNING
 
 This implementation is extremely crude.  This feature should really be in
@@ -124,53 +135,13 @@ packaging this than I did writing it.  I<Caveat importor!>
 
 =head1 AUTHOR
 
-Ricardo SIGNES, C<< <rjbs at cpan.org> >>
+Ricardo SIGNES
 
-=head1 BUGS
+=head1 COPYRIGHT AND LICENSE
 
-Please report any bugs or feature requests to
-C<bug-form at rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=HTML-Form-ForceValue>.
-I will be notified, and then you'll automatically be notified of progress on
-your bug as I make changes.
+This software is copyright (c) 2006 by Ricardo SIGNES.
 
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc HTML::Form::ForceValue
-
-You can also look for information at:
-
-=over 4
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/HTML-Form-ForceValue>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/HTML-Form-ForceValue>
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=HTML-Form-ForceValue>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/HTML-Form-ForceValue>
-
-=back
-
-=head1 ACKNOWLEDGEMENTS
-
-=head1 COPYRIGHT & LICENSE
-
-Copyright 2006 Ricardo SIGNES, all rights reserved.
-
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-1;

@@ -1,8 +1,13 @@
-INSTALLATION
 
-To install this module, run the following commands:
 
-    perl Makefile.PL
-    make
-    make test
-    make install
+This archive contains the distribution HTML-Form-ForceValue,
+version 0.008:
+
+  who cares what values are legal, anyway?
+
+This software is copyright (c) 2006 by Ricardo SIGNES.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+
